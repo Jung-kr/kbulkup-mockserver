@@ -5,23 +5,54 @@
 
 <mapper namespace="com.external.portfolio.mapper.UserAssetMapper">
 
-    <select id="findSnapshotsByfintechUseNum" resultType="com.external.portfolio.domain.Snapshot">
+    <select id="findSnapshotsByUserId" resultType="com.external.portfolio.domain.Snapshot">
         SELECT *
         FROM snapshot_pools
-        WHERE fintech_use_num = #{fintechUseNum}
+        WHERE user_id = #{userId}
         ORDER BY snapshot_date DESC
     </select>
 
-    <select id="findTransactionByfintechUseNum" resultType="com.external.portfolio.domain.Transaction">
-    <![CDATA[
-        SELECT *
-        FROM transaction_pools
-        WHERE fintech_use_num = #{fintechUseNum}
-          AND tran_date >= #{start}
-          AND tran_date < #{end}
-        ORDER BY tran_date DESC
+<!--    <select id="findTransactionByUserId" resultType="com.external.portfolio.domain.Transaction">-->
+<!--        <![CDATA[-->
+<!--            SELECT *-->
+<!--            FROM transaction_pools-->
+<!--            WHERE user_id = #{userId}-->
+<!--              AND tran_date >= #{start}-->
+<!--              AND tran_date < #{end}-->
+<!--        ]]>-->
+<!--            <if test="cursor != null">-->
+<!--                <![CDATA[-->
+<!--                    AND tran_date < #{cursor}-->
+<!--                ]]>-->
+<!--            </if>-->
+<!--        <![CDATA[-->
+<!--            ORDER BY tran_date DESC-->
+<!--            LIMIT 10;-->
+<!--        ]]>-->
+<!--    </select>-->
+
+    <select id="findTransactionByUserId" resultType="com.external.portfolio.domain.Transaction">
+        <![CDATA[
+            SELECT *
+            FROM transaction_pools
+            WHERE user_id = #{userId}
+              AND tran_date >= #{start}
+              AND tran_date < #{end}
+            ORDER BY tran_date DESC
         ]]>
-</select>
+    </select>
+
+    <select id="findCompositionByUserId" resultType="com.external.portfolio.domain.Composition">
+        SELECT *
+        FROM composition_pools
+        WHERE user_id = #{userId};
+    </select>
+
+    <select id="findPortfolioIdByFintechUseNum" resultType="java.lang.Long">
+        SELECT user_id
+        FROM portfolios
+        WHERE fintech_use_num = #{fintechUseNum};
+    </select>
 
     <update id="assignTransactionPools">
         UPDATE transaction_pools
@@ -43,9 +74,4 @@
         balance = VALUES(balance)
     </insert>
 
-    <select id="findCompositionByfintechUseNum" resultType="com.external.portfolio.domain.Composition">
-        SELECT *
-        FROM composition_pools
-        WHERE fintech_use_num = #{fintechUseNum};
-    </select>
 </mapper>
