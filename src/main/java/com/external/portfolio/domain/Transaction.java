@@ -4,27 +4,28 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class Transaction {
     private Long transactionId;
-    private String fintechUseNum;
+    private Long userId;
     private TransactionType transactionType;
     private Long amount;
     private TransactionCategory transactionCategory;
-    private LocalDate tranDate;
+    private LocalDateTime tranDate;
 
     public static Transaction createTransaction(
             Long transactionId,
-            String fintechUseNum,
+            Long userId,
             Long amount,
             TransactionCategory transactionCategory,
-            LocalDate tranDate
+            LocalDateTime tranDate
     ) {
         return Transaction.builder()
                 .transactionId(transactionId)
-                .fintechUseNum(fintechUseNum)
+                .userId(userId)
                 .amount(amount)
                 .transactionCategory(transactionCategory)
                 .tranDate(tranDate)

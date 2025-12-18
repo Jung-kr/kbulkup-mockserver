@@ -4,17 +4,18 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class Snapshot {
-    private String fintechUseNum;
+    private Long userId;
     private Long balance;
-    private LocalDate snapshotDate;
+    private LocalDateTime snapshotDate;
 
-    public static Snapshot create( String fintechUseNum, Long balance, LocalDate snapshotDate) {
+    public static Snapshot create(Long userId, Long balance, LocalDateTime snapshotDate) {
         return Snapshot.builder()
-                .fintechUseNum(fintechUseNum)
+                .userId(userId)
                 .balance(balance)
                 .snapshotDate(snapshotDate)
                 .build();
