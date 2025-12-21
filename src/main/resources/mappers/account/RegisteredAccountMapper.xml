@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.external.account.mapper.RegisteredAccountMapper">
+
+    <insert id="insertAccount" parameterType="com.external.account.domain.RegisteredAccount">
+        INSERT INTO registered_accounts (
+            fintech_use_num, user_seq_no, bank_code, bank_name,
+            account_num, account_holder_name, balance_amt, available_amt, created_at
+        ) VALUES (
+                     #{fintechUseNum}, #{userSeqNo}, #{bankCode}, #{bankName},
+                     #{accountNum}, #{accountHolderName}, #{balanceAmt}, #{availableAmt}, NOW()
+                 )
+    </insert>
+
+    <!-- Select by FintechUseNum -->
+    <select id="findAccountByFintechUseNum" resultType="com.external.account.domain.RegisteredAccount">
+        SELECT
+            fintech_use_num, user_seq_no, bank_code, bank_name,
+            account_num, account_holder_name, balance_amt, available_amt, created_at
+        FROM registered_accounts
+        WHERE fintech_use_num = #{fintechUseNum}
+    </select>
+
+    <!-- Select by UserSeqNo and FintechUseNum (계좌 소유권 확인) -->
+    <select id="findAccountByUserSeqNoAndFintechUseNum" resultType="com.external.account.domain.RegisteredAccount">
+        SELECT
+            fintech_use_num, user_seq_no, bank_code, bank_name,
+            account_num, account_holder_name, balance_amt, available_amt, created_at
+        FROM registered_accounts
+        WHERE user_seq_no = #{userSeqNo}
+          AND fintech_use_num = #{fintechUseNum}
+    </select>
+
+</mapper>
