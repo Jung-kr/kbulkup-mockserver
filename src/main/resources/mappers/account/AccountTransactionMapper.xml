@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.external.account.mapper.AccountTransactionMapper">
+    <select id="findTransactionList" resultType="com.external.account.domain.AccountTransaction">
+        SELECT tran_no, fintech_use_num, tran_date, inout_type,
+               tran_amt, after_balance_amt, printed_content, created_at
+        FROM account_transactions
+        WHERE fintech_use_num = #{fintechUseNum}
+            AND tran_date >= #{fromDate}
+            AND tran_date <![CDATA[<]]> #{toDate}
+        ORDER BY tran_date DESC
+    </select>
+</mapper>
