@@ -24,11 +24,11 @@ public class JwtUtil {
         this.secretKey = Keys.hmacShaKeyFor(secret.getBytes(StandardCharsets.UTF_8));
     }
 
-    public String generateToken(String fintechUseNum) {
+    public String generateToken(String userSeqNo) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMs);
 
-        Claims claims = Jwts.claims().setSubject(String.valueOf(fintechUseNum));
+        Claims claims = Jwts.claims().setSubject(String.valueOf(userSeqNo));
 
         return Jwts.builder()
                 .setClaims(claims)
@@ -38,7 +38,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    public String getFintechUseNum(String token) {
+    public String getUserSeqNo(String token) {
         token = token.replace("Bearer ", "").trim();
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(secretKey)
