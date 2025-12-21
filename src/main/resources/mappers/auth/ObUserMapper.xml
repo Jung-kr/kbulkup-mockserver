@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.external.oauth.mapper.ObUserMapper">
+
+    <insert id="insertUser" parameterType="com.external.oauth.domain.ObUser">
+        INSERT INTO ob_users (user_seq_no, user_name, created_at)
+        VALUES (#{userSeqNo}, #{userName}, NOW())
+    </insert>
+
+    <select id="getUserBySeqNo" resultType="com.external.oauth.domain.ObUser">
+        SELECT user_seq_no, user_name, created_at
+        FROM ob_users
+        WHERE user_seq_no = #{userSeqNo}
+    </select>
+
+</mapper>
