@@ -10,7 +10,23 @@ import java.util.List;
 @Mapper
 public interface AccountTransactionMapper {
 
-    List<AccountTransaction> findTransactionList(@Param("fintechUseNum") String fintechUseNum,
-                                                 @Param("fromDate") LocalDate fromDate,
-                                                 @Param("toDate") LocalDate toDate);
+    /**
+     * 자산 구성 / 스냅샷 계산용
+     * - 기간 전체
+     * - 페이징 없음
+     */
+    List<AccountTransaction> findTransactionsForAsset(
+            @Param("fintechUseNum") String fintechUseNum
+    );
+
+    /**
+     * 거래내역 조회용 (UI)
+     * - 기간 필터
+     * - 페이징 고려 가능
+     */
+    List<AccountTransaction> findTransactionHistory(
+            @Param("fintechUseNum") String fintechUseNum,
+            @Param("fromDate") LocalDate fromDate,
+            @Param("toDate") LocalDate toDate
+    );
 }

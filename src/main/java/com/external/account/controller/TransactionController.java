@@ -14,11 +14,25 @@ public class TransactionController {
 
     private final TransactionService transactionService;
 
-    @GetMapping
-    public List<TransactionListResponse> getTransactions(
+    /**
+     * 거래 내역 최근 3개월 조회 (UI 표시용)
+     */
+    @GetMapping("/history")
+    public List<TransactionListResponse> getTransactionHistory(
             @RequestHeader("Authorization") String authorization,
             @RequestParam("fintech_use_num") String fintechUseNum
     ) {
-        return transactionService.getTransactions(authorization, fintechUseNum);
+        return transactionService.getTransactionHistory(authorization, fintechUseNum);
+    }
+
+    /**
+     * 자산 구성, 스냅샷 계산용 전체 거래 내역 조회
+     */
+    @GetMapping("/asset")
+    public List<TransactionListResponse> getTransactionsForAsset(
+            @RequestHeader("Authorization") String authorization,
+            @RequestParam("fintech_use_num") String fintechUseNum
+    ) {
+        return transactionService.getTransactionsForAsset(authorization, fintechUseNum);
     }
 }
