@@ -8,8 +8,10 @@ import com.external.account.mapper.RegisteredAccountMapper;
 import com.external.user.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,7 +22,8 @@ public class TransactionService {
     private final RegisteredAccountMapper accountMapper;
     private final AccountTransactionMapper transactionMapper;
 
-    public List<TransactionListResponse> getTransactionHistory(String accessToken, String fintechUseNum) {
+    @Transactional(readOnly = true)
+    public TransactionListResponse getTransactionHistory(String accessToken, String fintechUseNum, LocalDateTime cursor) {
         //access token에서 user_seq_no 추출
         String userSeqNo = jwtUtil.getUserSeqNo(accessToken);
 
@@ -33,20 +36,14 @@ public class TransactionService {
         //최근 3개월 거래내역 조회
         LocalDate toDate = LocalDate.now();
         LocalDate fromDate = toDate.minusMonths(3).withDayOfMonth(1);
-        List<AccountTransaction> transactions = transactionMapper.findTransactionHistory(fintechUseNum, fromDate, toDate);
+        List<AccountTransaction> transactions = transactionMapper.findTransactionHistory(fintechUseNum, fromDate, toDate, cursor);
+        LocalDateTime nextCursor = transactions.get(transactions.size() - 1).getTranDate();
 
-        return transactions.stream()
-                .map(tx -> new TransactionListResponse(
-                        tx.getTranDate(),
-                        tx.getInoutType(),
-                        tx.getTranAmt(),
-                        tx.getAfterBalanceAmt(),
-                        tx.getPrintedContent()
-                ))
-                .toList();
+        return new TransactionListResponse(transactions, nextCursor);
     }
 
-    public List<TransactionListResponse> getTransactionsForAsset(String accessToken, String fintechUseNum) {
+    @Transactional(readOnly = true)
+    public TransactionListResponse getTransactionsForAsset(String accessToken, String fintechUseNum) {
         //access token에서 user_seq_no 추출
         String userSeqNo = jwtUtil.getUserSeqNo(accessToken);
 
@@ -59,14 +56,6 @@ public class TransactionService {
         //전체 거래내역 조회
         List<AccountTransaction> transactions = transactionMapper.findTransactionsForAsset(fintechUseNum);
 
-        return transactions.stream()
-                .map(tx -> new TransactionListResponse(
-                        tx.getTranDate(),
-                        tx.getInoutType(),
-                        tx.getTranAmt(),
-                        tx.getAfterBalanceAmt(),
-                        tx.getPrintedContent()
-                ))
-                .toList();
+        return new TransactionListResponse(transactions);
     }
 }

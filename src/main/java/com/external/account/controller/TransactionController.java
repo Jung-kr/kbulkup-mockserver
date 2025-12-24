@@ -5,7 +5,7 @@ import com.external.account.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,18 +18,19 @@ public class TransactionController {
      * 거래 내역 최근 3개월 조회 (UI 표시용)
      */
     @GetMapping("/history")
-    public List<TransactionListResponse> getTransactionHistory(
+    public TransactionListResponse getTransactionHistory(
             @RequestHeader("Authorization") String authorization,
-            @RequestParam("fintech_use_num") String fintechUseNum
-    ) {
-        return transactionService.getTransactionHistory(authorization, fintechUseNum);
+            @RequestParam("fintech_use_num") String fintechUseNum,
+            @RequestParam(value = "cursor", required = false) LocalDateTime cursor
+            ) {
+        return transactionService.getTransactionHistory(authorization, fintechUseNum, cursor);
     }
 
     /**
      * 자산 구성, 스냅샷 계산용 전체 거래 내역 조회
      */
     @GetMapping("/asset")
-    public List<TransactionListResponse> getTransactionsForAsset(
+    public TransactionListResponse getTransactionsForAsset(
             @RequestHeader("Authorization") String authorization,
             @RequestParam("fintech_use_num") String fintechUseNum
     ) {
