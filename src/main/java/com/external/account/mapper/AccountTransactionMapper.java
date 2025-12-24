@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
@@ -27,6 +28,7 @@ public interface AccountTransactionMapper {
     List<AccountTransaction> findTransactionHistory(
             @Param("fintechUseNum") String fintechUseNum,
             @Param("fromDate") LocalDate fromDate,
-            @Param("toDate") LocalDate toDate
+            @Param("toDate") LocalDate toDate,
+            @Param("cursor") LocalDateTime cursor
     );
 }

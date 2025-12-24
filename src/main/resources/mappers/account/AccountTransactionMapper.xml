@@ -16,8 +16,12 @@
                tran_amt, after_balance_amt, printed_content, created_at
         FROM account_transactions
         WHERE fintech_use_num = #{fintechUseNum}
-          AND tran_date >= #{fromDate}
-          AND tran_date <![CDATA[<]]> #{toDate}
+            AND tran_date >= #{fromDate}
+            AND tran_date <![CDATA[<]]> #{toDate}
+        <if test="cursor != null">
+            AND tran_date <![CDATA[<]]> #{cursor}
+        </if>
         ORDER BY tran_date DESC
+        LIMIT 10;
     </select>
 </mapper>
