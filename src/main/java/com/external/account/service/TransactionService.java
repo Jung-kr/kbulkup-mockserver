@@ -5,7 +5,7 @@ import com.external.account.domain.RegisteredAccount;
 import com.external.account.dto.TransactionListResponse;
 import com.external.account.mapper.AccountTransactionMapper;
 import com.external.account.mapper.RegisteredAccountMapper;
-import com.external.user.util.JwtUtil;
+import com.external.common.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -3,7 +3,7 @@ package com.external.oauth.service;
 import com.external.oauth.domain.ObUser;
 import com.external.oauth.dto.TokenResponse;
 import com.external.oauth.mapper.ObUserMapper;
-import com.external.user.util.JwtUtil;
+import com.external.common.auth.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
