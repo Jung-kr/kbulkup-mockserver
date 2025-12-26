@@ -1,4 +1,4 @@
-package com.external.user.exception;
+package com.external.common.auth.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

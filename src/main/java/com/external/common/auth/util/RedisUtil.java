@@ -1,4 +1,4 @@
-package com.external.user.util;
+package com.external.common.auth.util;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

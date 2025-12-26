@@ -1,4 +1,4 @@
-package com.external.user.util;
+package com.external.common.auth.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
