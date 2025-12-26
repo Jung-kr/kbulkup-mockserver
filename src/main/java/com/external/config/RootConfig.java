@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource({"classpath:/application.properties", "classpath:config/db.properties", "classpath:config/redis.properties"})
-@MapperScan(basePackages = {"com.external.portfolio.mapper", "com.external.user.mapper", "com.external.oauth.mapper", "com.external.account.mapper"}, sqlSessionFactoryRef = "sqlSessionFactory")
+@MapperScan(basePackages = {"com.external.oauth.mapper", "com.external.account.mapper"}, sqlSessionFactoryRef = "sqlSessionFactory")
 @EnableTransactionManagement
 public class RootConfig {
 
