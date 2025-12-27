@@ -1,11 +1,13 @@
 package com.external.account.controller;
 
+import com.external.account.domain.AccountTransaction;
 import com.external.account.dto.TransactionListResponse;
 import com.external.account.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -30,7 +32,7 @@ public class TransactionController {
      * 자산 구성, 스냅샷 계산용 전체 거래 내역 조회
      */
     @GetMapping("/asset")
-    public TransactionListResponse getTransactionsForAsset(
+    public List<AccountTransaction> getTransactionsForAsset(
             @RequestHeader("Authorization") String authorization,
             @RequestParam("fintech_use_num") String fintechUseNum
     ) {

@@ -43,7 +43,7 @@ public class TransactionService {
     }
 
     @Transactional(readOnly = true)
-    public TransactionListResponse getTransactionsForAsset(String accessToken, String fintechUseNum) {
+    public List<AccountTransaction> getTransactionsForAsset(String accessToken, String fintechUseNum) {
         //access token에서 user_seq_no 추출
         String userSeqNo = jwtUtil.getUserSeqNo(accessToken);
 
@@ -56,6 +56,6 @@ public class TransactionService {
         //전체 거래내역 조회
         List<AccountTransaction> transactions = transactionMapper.findTransactionsForAsset(fintechUseNum);
 
-        return new TransactionListResponse(transactions);
+        return transactions;
     }
 }
